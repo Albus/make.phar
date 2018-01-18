@@ -43,7 +43,7 @@ if(!is_dir($directory)) {
     exit(1);
 }
 
-$directory = realpath($directory);
+$directory = new \SPLFileInfo($directory);
 
 $output_filename = $args['PHAR'];
 if(!$output_filename) {
@@ -54,7 +54,7 @@ if(!$output_filename) {
 
 $phar = new Phar($output_filename);
 
-$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)), $directory);
+$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)), $directory->getPath());
 
 $entry = $args['--entry'];
 
